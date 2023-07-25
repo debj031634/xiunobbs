@@ -1,0 +1,11 @@
+{
+    "name": "小肥羊自用插件",
+    "brief": "集成iceEditor,iceCode,依赖search插件，不要和知乎蓝色主题同时使用。",
+    "version": "1.00",
+    "bbs_version": "4.0.4",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": {
+        "header_nav_user_start.htm":1.5
+    }
+}
