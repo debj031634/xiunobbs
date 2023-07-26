@@ -38,4 +38,3 @@
 'notice_message_replytoyou'=>'To your',
 'notice_message_replytoyou_at'=>'the topic',
 'notice_message_replytoyou_for'=>'for your comments',
-'notice_my_delete_thispagemessage'=>'delete this page message',

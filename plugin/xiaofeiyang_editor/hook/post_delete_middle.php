@@ -1,2 +1,3 @@
-print_r($post);
+/*print_r($post);
 exit();
+*/

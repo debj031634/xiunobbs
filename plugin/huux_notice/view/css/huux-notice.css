@@ -18,16 +18,24 @@
     }
 }
 /* nav header */
-.nav-item.usernotice.current > .nav-link > .unread {
-    display: inline-block!important;
+.nav-item.usernotice>.nav-link span.unread {
+    display: none
+}
+
+.nav-item.usernotice.current>.nav-link .unread {
+    display: block
+}
+
+.nav-item.usernotice.current>.nav-link .read {
+    display: none
 }
 
 /* postlist*/
-.postlist > .post.current .avatar-3{
+.postlist>.post.current .avatar-3{
     animation: post_shake 3s ease infinite;    
 } 
 
-/* bootstrap + */
+/*bootstrap plus*/
 .text-small {
     font-size: 12px
 }
@@ -43,7 +51,7 @@
 }
 
 .noticelist > .notice:not(:last-child) {
-    border-bottom: 1px solid var(--gray-200);
+    border-bottom: 1px solid #e9ecef
 }
 
 .noticelist > .notice .message {
