@@ -8,6 +8,7 @@ var lang = {
 	'yes': '是',
 	'no': '否',
 	'open': '打开',
-	'close': '关闭',
+	'close': '关闭',	
+	'please_choose_thread':'请选择主题',
 	// hook lang_zh_cn_bbs_js.htm
 };

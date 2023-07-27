@@ -9,14 +9,15 @@ $(function() {
 		<?php if(!empty($group['allowharddelete'])) { ?>
 		var radios = xn.form_radio('type', {"0": "删除", "1": "物理删除", "2": "恢复删除"}, 0);
 		<?php } ?>
+		
 		//var htmladd = '<br><br><label class="text-small"><input type="checkbox" name="logic" value="0" /> 物理删除</label>';
 		//htmladd += '<br><label class="text-small"><input type="checkbox" name="logic" value="0" /> 恢复删除</label>';
-		$.confirm(xn.lang('confirm_delete_thread', {n:modtid.length}) + '<br><br>'+radios, function() {
-			var tids = xn.implode('_', modtid);
+		//xn.lang('confirm_delete_thread', {n:modtid.length}) 
+		$.confirm("删除帖子吗"+ '<br><br>'+radios, function() {			
 			var type = $('input[name="type"]').checked();
-			$.xpost(xn.url('mod-delete-'+tids), {type: type}, function(code, message) {
+			$.xpost(xn.url('mod-delete'), {tidarr:modtid,type: type}, function(code, message) {
 				if(code != 0) return $.alert(message);
-				$.alert(message).delay(1000).location('');
+				$.alert(message).delay(10000).location('');
 			});
 		});
 	})
