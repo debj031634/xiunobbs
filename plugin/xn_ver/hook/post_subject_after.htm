@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">版本号</span>
+            </div>
+            <input value="<?php echo !empty($thread['vernum']) ? $thread['vernum']:""?>" type="text" class="form-control" id="vernum" name="vernum" placeholder="1.0.0.1" >
+
+        </div>
+
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">更新日期</span>
+            </div>
+            <input class="form-control" type="date" id="ver_time" name="ver_time" placeholder="版本发布时间" value="<?=date("Y-m-d")?>">
+        </div>
+    </div>
+</div>

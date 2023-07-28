@@ -1,0 +1,1 @@
+'vernum_length_over_limit' => 'version number length over {maxlength} character',

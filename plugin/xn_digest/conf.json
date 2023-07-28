@@ -1,10 +1,10 @@
 {
     "name": "精华主题",
-    "brief": "支持三级精华设置，用尾部图标标示精华主题。",
-    "version": "3.8",
-    "bbs_version": "4.0.3",
-    "installed": 0,
-    "enable": 0,
+    "brief": "支持三级精华设置，用尾部图标标示精华主题。小肥羊修改，完善兼容性",
+    "version": "3.9",
+    "bbs_version": "4.0.7",
+    "installed": 1,
+    "enable": 1,
     "hooks_rank": [],
     "overwrites_rank": [],
     "dependencies": []

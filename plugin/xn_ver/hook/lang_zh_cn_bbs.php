@@ -1,0 +1,1 @@
+'vernum_length_over_limit' => '版本号最长 {maxlength} 个字符',

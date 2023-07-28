@@ -1,8 +1,8 @@
 {
     "name": "逻辑删除",
-    "brief": "逻辑删除。",
-    "version": "2.0",
-    "bbs_version": "4.0",
+    "brief": "逻辑删除。小肥羊修复版本，修复了在新版中全局删除以及管理员组不可授权的问题。",
+    "version": "2.1",
+    "bbs_version": "4.0.4",
     "installed": 1,
     "enable": 1,
     "hooks_rank": [],

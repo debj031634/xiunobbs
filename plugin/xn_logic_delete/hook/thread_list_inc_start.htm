@@ -9,7 +9,8 @@ if($threadlist) {
                 // 判断管理权限
                 if($_thread['deleted'] > 0) {
                         $threadlist[$k]['top_class'] .= ' deleted';
-                        if(!$group['allowharddelete']) {
+                        if(!$group['allowharddelete'] || true) {
+                                // 不是管理组，就清除该条信息，便于隐藏。。。现在改为一直隐藏
                                 unset($threadlist[$k]);
                         }
 		}

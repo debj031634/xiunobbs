@@ -8,9 +8,13 @@ if($action == 'digest') {
 		
 	} else {
 		
+		
 		$digest = param('digest', 0);
 		
-		$tidarr = param('tidarr', array(0));
+		$tids = param(2);
+		$tidarr = explode('_', $tids);
+		//$tidarr = param('tidarr', array(0));
+		
 		empty($tidarr) AND message(-1, lang('please_choose_thread'));
 		$threadlist = thread_find_by_tids($tidarr);
 		
