@@ -1,0 +1,13 @@
+{
+    "name": "小肥羊UeditorPlus",
+    "brief": "集成UeditorPlus",
+    "version": "1.0",
+    "bbs_version": "4.0.7",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": {
+        "header_nav_user_start.htm": 1.5,
+        "post_message_after.htm":1001
+
+    }
+}

@@ -1,0 +1,95 @@
+
+<!--{hook plugin_iceditor_js_config_after.htm}-->
+
+<script type="text/javascript" src="plugin/xfy_editor/iceeditor/iceEditor.js"></script>
+<script>
+    ice.editor('message',function(e){
+        this.uploadUrl="/plugin/xfy_editor/php-upload.php";
+        //第二步，自定义菜单，默认加载全部
+        e.menu = [
+            'backColor', //字体背景颜色
+            'fontSize', //字体大小
+            'foreColor', //字体颜色
+            'bold', //粗体
+            'italic', //斜体
+            'underline', //下划线
+            'strikeThrough', //删除线
+            'justifyLeft', //左对齐
+            'justifyCenter', //居中对齐
+            'justifyRight', //右对齐
+            'indent', //增加缩进
+            'outdent', //减少缩进
+            'insertOrderedList', //有序列表
+            'insertUnorderedList', //无序列表
+            'superscript', //上标
+            'subscript', //下标
+            'createLink', //创建连接
+            'unlink', //取消连接
+            'hr', //水平线
+            'table', //表格        
+            'music', //音乐
+            'video', //视频       
+            'removeFormat', //格式化样式
+            'paste', //富文本粘贴
+            'code', //源码
+            'line' //菜单分割线
+        ];
+        //关闭最大化按钮：默认显示最大化按钮
+        e.maxWindow = true;
+        this.plugin({
+            menu:'代码语言',
+            name:'codeLanguages',
+            dropdown:`
+                <div class="iceEditor-codeLanguages" style="padding:10px 20px;">
+                    <div>iceCode代码高亮</div>
+                    <select>
+                        <option disabled="" selected="">代码语言</option>
+                        <option value="aardio">Aardio</option>
+                        <option value="html">HTML/XTML</option>
+                        <option value="css">CSS</option>
+                        <option value="js">JS</option>
+                        <option value="js">Json</option>
+                        <option value="php">PHP</option>
+                        <option value="python">Python</option>
+                        <option value="java">JAVA</option>
+                        <option value="sql">SQL</option>
+                        <option value="go">GO</option>
+                        <option value="cpp">C++</option>
+                        <option value="csharp">C#</option>
+                        <option value="c">C</option>
+                    </select>
+                </div>`,
+            success:function(e,z){
+                //获取content中的按钮
+                var select = e.getElementsByTagName('select')[0];
+                //设置点击事件
+                select.onchange=function(){
+                    //判断光标是否在pre标签中
+                    if(z.inNodeParent(z.range.getRangeAt(0).endContainer,'pre')){
+                        var pre = z.range.getRangeAt(0).endContainer.parentNode;
+                        if(pre.tagName == 'PRE'){
+                            pre.className = 'iceCode:'+select.value;
+                        }
+                        return;
+                    }
+                    var str = z.getSelectHTML().replace(/<\s*\/p\s*>/ig,"\n").replace(/<[^>]+>/g,'').replace(/\n/g,'<br>').trim();
+                    str = str.length?str:' ';
+                    z.element.focus();
+                    var range = z.range.getRangeAt(0);
+                    var frag = range.createContextualFragment('<pre class="iceCode:'+select.value+'">'+str+'</pre>');
+                    var lastNode = frag.firstChild.lastChild;
+                    range.insertNode(frag);
+                    range.setStart(lastNode,0);
+                    range.setEnd(lastNode,0);
+                    range.collapse();
+                    select.getElementsByTagName('option')[0].selected = true;
+                }    
+            }
+        });
+        //第三步：创建
+        e.create();
+    });
+
+</script>
+
+<!--{hook plugin_iceditor_js_css_after.htm}-->

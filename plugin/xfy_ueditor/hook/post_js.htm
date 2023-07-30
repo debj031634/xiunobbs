@@ -1,0 +1,34 @@
+
+<!--{hook plugin_iceditor_js_config_after.htm}-->
+
+
+<script type="text/javascript" charset="utf-8" src="plugin/xfy_ueditor/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugin/xfy_ueditor/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugin/xfy_ueditor/ueditor/lang/zh-cn/zh-cn.js?20220320"></script>
+
+<script type="text/javascript">
+    var txt = $("#uemessage").text()
+    var html = $("<div/>").html(txt).text()
+    $("#uemessage").html(html)
+    var ue = UE.getEditor('uemessage',{    
+    });
+
+    
+
+    xn_sbform=$('#message').css('display','none')
+    var xn_sbform=$('#message').parents('form'); //获取文本框message所在form表单
+    xn_sbform.on('submit',function(){
+        var html = ue.getContent()
+        console.log("提交",html)     
+        $("#message").html(html);
+
+    }); //给submit挂载同步事件
+    var xn_sbdata=$._data(xn_sbform[0],'events').submit; //获取form表单submit事件列表
+    console.log(xn_sbform)
+    xn_sbdata.splice(0,0,xn_sbdata.pop()); //把同步事件优先级设到最前
+    
+
+  </script>
+
+
+<!--{hook plugin_iceditor_js_css_after.htm}-->
