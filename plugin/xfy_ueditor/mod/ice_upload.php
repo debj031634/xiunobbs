@@ -28,6 +28,66 @@ class ice_upload{
        {
 			if($upload=='')$this->setOption('dir',isset($_SESSION['upload_path'])?$_SESSION['upload_path']:'/upload/files/'.date("Ymd").'/');
        }
+
+	function uploadUrl($imgurl){
+		/*********************** 基本参数 ***********************/
+		header("Content-Type: text/html; charset=utf-8");
+		header("X-Powered-By: uz");
+		date_default_timezone_set('PRC');
+		session_start();
+		/*********************** 基本参数 ***********************/
+		
+
+		/*********************** 上传项配置区 开始 ***********************/
+		//获取域名
+		$http = ($this->_isHttps() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'];
+
+		// 绝对路径
+		define('URL',$_SERVER['DOCUMENT_ROOT']);
+
+
+		//如果设置的上传目录不存在，则创建
+		if (!file_exists(URL.$this->dir)) {
+			@mkdir(URL.$this->dir,0777,true);
+		}
+
+		//定义用来返回上传文件成功后的URL连接的JSON格式
+		$url = [];
+
+		//网络图片下载到本地
+		if($imgurl){
+			$fileExt = $this->_fileExt($imgurl);
+			$img = @file_get_contents($imgurl);
+			if(!$img){
+				$url['error'] = 1;
+				$url['url'] = '';
+			}else{
+				$info = pathinfo($imgurl);
+				$name = $this->_fileRename($info['basename']);
+				//判断文件类型是否允许上传
+				/*
+				[
+                'state' => 'SUCCESS',
+                'url' => 'https://ms-assets.modstart.com/demo/modstart.jpg',
+                'size' => 100,
+                'title' => 'title',
+                'original' => '',
+                'source' => htmlspecialchars($imgUrl),
+            ] */
+				if (!$img || !in_array($fileExt,['jpg','jpeg','png','gif','bmp'])){
+					$url['state'] = 'FAILED';
+					$url['url'] = '';
+				}
+				if(file_put_contents(URL.$this->dir.$name, $img)){
+					$url['state'] = 'SUCCESS';
+					$url['url'] = $http.$this->dir.$name;
+					$url['source'] = $imgurl;
+				}
+			}			
+		}
+		return $url;
+	}
+	
 	function upload (){
 		/*********************** 基本参数 ***********************/
 		header("Content-Type: text/html; charset=utf-8");
@@ -69,29 +129,7 @@ class ice_upload{
 		//定义用来返回上传文件成功后的URL连接的JSON格式
 		$url = [];
 
-		//网络图片下载到本地
-		if(isset($_POST['iceEditor-img']) && $_POST['iceEditor-img']){
-			$fileExt = $this->_fileExt($_POST['iceEditor-img']);
-			$img = @file_get_contents($_POST['iceEditor-img']);
-			if(!$img){
-				$url['error'] = 1;
-				$url['url'] = '';
-			}else{
-				$info = pathinfo($_POST['iceEditor-img']);
-				$name = $this->_fileRename($info['basename']);
-				//判断文件类型是否允许上传
-				if (!$img || !in_array($fileExt,['jpg','jpeg','png','gif','bmp'])){
-					$url['error'] = 1;
-					$url['url'] = '';
-				}
-				if(file_put_contents(URL.$this->dir.$name, $img)){
-					$url['error'] = 0;
-					$url['url'] = $http.$this->dir.$name;
-				}
-			}
-			echo json_encode($url);
-			exit;
-		}
+
 		
 
 		//获取文件的类型

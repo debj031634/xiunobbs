@@ -5,7 +5,7 @@ $config = [
     "imageActionName" => "image",
     "imageFieldName" => "file",
     "imageMaxSize" => 1024 * 1024 * 10,
-    "imageAllowFiles" => ['.jpg', '.png', '.jpeg'],
+    "imageAllowFiles" => ['.jpg', '.png', '.jpeg','.gif'],
     "imageCompressEnable" => true,
     "imageCompressBorder" => 5000,
     "imageInsertAlign" => "none",
@@ -32,7 +32,7 @@ $config = [
     "catcherFieldName" => "source",
     "catcherUrlPrefix" => "",
     "catcherMaxSize" => 1024 * 1024 * 10,
-    "catcherAllowFiles" => ['.jpg', '.png', '.jpeg'],
+    "catcherAllowFiles" => ['.jpg', '.png', '.jpeg','.gif'],
 
     // 上传视频配置
     "videoActionName" => "video",
@@ -53,7 +53,7 @@ $config = [
     "imageManagerListSize" => 20,
     "imageManagerUrlPrefix" => "",
     "imageManagerInsertAlign" => "none",
-    "imageManagerAllowFiles" => ['.jpg', '.png', '.jpeg'],
+    "imageManagerAllowFiles" => ['.jpg', '.png', '.jpeg','.gif'],
 
     // 列出指定目录下的文件
     "fileManagerActionName" => "listFile",
@@ -159,15 +159,10 @@ switch ($action) {
         if (!is_array($source) || empty($source)) {
             $source = [];
         }
+        $up = new ice_upload();
         foreach ($source as $imgUrl) {
-            $list[] = [
-                'state' => 'SUCCESS',
-                'url' => 'https://ms-assets.modstart.com/demo/modstart.jpg',
-                'size' => 100,
-                'title' => 'title',
-                'original' => '',
-                'source' => htmlspecialchars($imgUrl),
-            ];
+            $res = $up->uploadUrl($imgUrl);
+            if($res['state']=="SUCCESS") $list[] = $res;
         }
         output(['state' => 'SUCCESS', 'list' => $list]);
     default:
