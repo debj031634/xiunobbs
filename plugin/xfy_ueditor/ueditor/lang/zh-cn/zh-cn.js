@@ -125,6 +125,9 @@ UE.I18N['zh-cn'] = {
         'vb':'Visual Basic',
         'xml':'XML'
     },
+
+
+
     'confirmClear':"确定清空当前文档么？",
     'contextMenu':{
         'delete':"删除",

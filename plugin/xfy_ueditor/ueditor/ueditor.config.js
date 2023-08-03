@@ -84,18 +84,18 @@
         "selectall",    // 全选
         "cleardoc",     // 清空文档
         "|",
-        "rowspacingtop",// 段前距
-        "rowspacingbottom",    // 段后距
+       // "rowspacingtop",// 段前距
+        //"rowspacingbottom",    // 段后距
         "lineheight",          // 行间距
         "|",
-        "customstyle",         // 自定义标题
-        "paragraph",           // 段落格式
+        //"customstyle",         // 自定义标题
+        //"paragraph",           // 段落格式
         "fontfamily",          // 字体
         "fontsize",            // 字号
-        "|",
-        "directionalityltr",   // 从左向右输入
-        "directionalityrtl",   // 从右向左输入
-        "indent",              // 首行缩进
+        //"|",
+        //"directionalityltr",   // 从左向右输入
+        //"directionalityrtl",   // 从右向左输入
+        //"indent",              // 首行缩进
         "|",
         "justifyleft",         // 居左对齐
         "justifycenter",       // 居中对齐
@@ -121,7 +121,8 @@
         "insertvideo",         // 视频
         //"attachment",          // 附件
         "insertframe",         // 插入Iframe
-        "insertcode",          // 插入代码
+        //"insertcode",          // 插入代码
+        "插入代码",
         "pagebreak",           // 分页
         "template",            // 模板
         "background",          // 背景
@@ -145,12 +146,13 @@
         "mergedown",           // 下合并单元格
         "splittocells",        // 完全拆分单元格
         "splittorows",         // 拆分成行
-        "splittocols",         // 拆分成列
+        "splittocols",         // 拆分成列        
         "|",
         "print",               // 打印
         "preview",             // 预览
         "searchreplace",       // 查询替换
         "help",                // 帮助
+        
       ]
     ]
 
