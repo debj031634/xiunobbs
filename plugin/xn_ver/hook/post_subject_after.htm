@@ -17,4 +17,22 @@
             <input class="form-control" type="date" id="ver_time" name="ver_time" placeholder="版本发布时间" value="<?=date("Y-m-d")?>">
         </div>
     </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">标题图片</span>
+            </div>
+            <input value="<?php echo !empty($thread['ver_pic']) ? $thread['ver_pic']:""?>" type="text" class="form-control" id="ver_pic" name="ver_pic" placeholder="" >
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">阅读密码</span>
+            </div>
+            <input value="<?php echo !empty($thread['ver_pass']) ? $thread['ver_pass']:""?>" type="text" class="form-control" id="ver_pass" name="ver_pass" placeholder="" >
+        </div>
+    </div>
 </div>

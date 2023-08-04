@@ -7,7 +7,6 @@
     "enable": 1,
     "hooks_rank": {
         "header_nav_user_start.htm": 1.5,
-        "post_message_after.htm":1001
-
+        "post_message_after.htm": 1001
     }
 }

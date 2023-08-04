@@ -5,8 +5,8 @@
     "author": "deatil",
     "id": "haya_post_attach_lite",
     "bbs_version": "4.0",
-    "installed": 1,
-    "enable": 1,
+    "installed": 0,
+    "enable": 0,
     "hooks_rank": {
         "model_post_file_list_html_start.php": 150
     },

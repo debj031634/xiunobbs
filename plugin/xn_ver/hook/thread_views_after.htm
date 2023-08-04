@@ -1,6 +1,37 @@
-<?php if($thread['vernum']) { ?>
-    <span>
-		<span class="ml-1 mr-1 badge  badge-success" style="font-weight:unset">v <?php echo $thread['vernum'];?></span>
-		<span class="badge  badge-primary"  style="font-weight:unset"><?php echo date("Y-m-d", $thread['ver_time']);?></span>
-    </span>
-<?php } ?>
+<?php
+	if($thread['ver_pass']) {
+		$ver_view_pass = _POST('ver_view_pass','');
+?>
+		<span>
+			<img src="/plugin/xn_ver/pass.png" width=16 height=16>
+		</span>
+<?php
+	}
+	if($thread['vernum']) {
+ ?>
+		<span>
+			<span class="ml-1 mr-1 badge  badge-success" style="font-weight:unset">v <?php echo $thread['vernum'];?></span>
+			<span class="badge  badge-primary"  style="font-weight:unset"><?php echo date("Y-m-d", $thread['ver_time']);?></span>
+		</span>
+<?PHP
+}
+	if( $gid!=1 and $gid!=2 and $gid!=4 and $gid!=5 and $thread['ver_pass'] and $thread['uid']!=$uid and $ver_view_pass!==$thread['ver_pass']) {
+?>
+		<br>
+		<form action="" method="post" id="form">
+			<br>
+			<div class="col-md-15 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">请输入阅读密码</span>
+					</div>
+					<input type="text" class="form-control" id="ver_view_pass" name="ver_view_pass" placeholder="" >
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="正在提交..." default-text="确定">确定</button>
+		</form>
+<?php
+		include _include(APP_PATH.'view/htm/footer.inc.htm');
+		exit;
+	}
+ ?>

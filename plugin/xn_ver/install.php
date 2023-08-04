@@ -17,6 +17,14 @@ $r = db_exec($sql);
 $sql = "ALTER TABLE {$tablepre}thread ADD COLUMN ver_time int(11) unsigned NOT NULL DEFAULT '0'";
 $r = db_exec($sql);
 
+// 加一个图片字段
+$sql = "ALTER TABLE {$tablepre}thread ADD COLUMN ver_pic char(255) NOT NULL DEFAULT ''";
+$r = db_exec($sql);
+
+// 加一个密码字段
+$sql = "ALTER TABLE {$tablepre}thread ADD COLUMN ver_pass char(16) NOT NULL DEFAULT ''";
+$r = db_exec($sql);
+
 //$r === FALSE AND message(-1, '创建表结构失败');
 
 ?>
