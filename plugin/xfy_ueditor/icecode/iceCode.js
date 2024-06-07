@@ -17,6 +17,63 @@ var ice = ice || {
 		head.appendChild(link);
 	}
 };
+// 光庆改start，定义函数，生成本代码唯一ID，防止多个代码框ID重复
+var getUniqueID = function () {
+		var time = Date.now().toString(36)
+		var random = Math.random().toString(36)
+		random = random.substring(2, random.length)
+		return random + time
+}
+// 定义一个定时关闭的提示框
+var okimg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg=="
+
+var popAlert = function(text,strlength){
+	var ele = document.querySelector('#popup_alert');
+    if (!ele) {
+		ele = document.createElement('div');
+		ele.id = "popup_alert";
+		ele.style="position:fixed;top:50%;left:50%;margin-left: -200px;margin-top: -50px;width: 400px;height: 100px;border: 1px solid #ffffff;text-align:center;line-height:100px;background:#6db16f;border-radius:20px;box-shadow: 5px 5px 5px #888888; opacity: 0.9;font-size:18px;color:#FFFFFF;display:none;";
+        document.body.appendChild(ele);
+    }
+	if (strlength) {
+		ele.innerHTML = "<img src='"+okimg+"'>&nbsp;&nbsp;&nbsp;" +  text + '&nbsp;&nbsp;&nbsp;<span style="font-size:14px;">( 字符数：' + strlength.toString()+' )</span>';
+	} else {
+		ele.innerHTML = text;
+	}
+   $('#popup_alert').fadeIn('fast', function () {
+			setTimeout(function () {
+				$('#popup_alert').fadeOut('fast', function () {});
+			}, 1500);
+   });
+}
+//定义函数，实现复制代码到剪贴板功能。
+var copyTextByGodking = function (elementId) {
+    var text = document.getElementById(elementId).value;
+    if (!text) {
+        popAlert("未获取到指定的代码");
+        return;
+    }
+    if (navigator.clipboard) {
+            navigator.clipboard.writeText(text);
+            popAlert("已复制到剪贴板",text.length);
+            return;
+    }
+    var eleTextarea = document.querySelector('#tempTextarea');
+    if (!eleTextarea) {
+        eleTextarea = document.createElement('textarea');
+        eleTextarea.style.width = 0;
+        eleTextarea.style.position = 'fixed';
+        eleTextarea.style.left = '-999px';
+        eleTextarea.style.top = '10px';
+        eleTextarea.setAttribute('readonly', 'readonly');
+        document.body.appendChild(eleTextarea);
+    }
+    eleTextarea.value = text;
+    eleTextarea.select();
+    document.execCommand('copy', true);
+    popAlert("已复制到剪贴板",text.length);
+};
+//光庆改end
 //模块链接地址
 var moduleSrc = document.currentScript ? document.currentScript.src : document.scripts[document.scripts.length - 1].src;
 //模块路径目录
@@ -375,8 +432,12 @@ ice.code.prototype.init = function(options) {
 	
 	html = this.codeInit(html);	
 	html = this.text2html(html);
-	html = this.highlight(html, language);
-	pre.innerHTML = '<div class="iceCode-title">Code ' + language + '<span class="iceCode-info">Line:' + html.line + '</span><span class="iceCode-arrow"></span></div>' + html.html;
+
+	//光庆改start，创建代码唯一ID，创建复制按钮
+	var codeID = "Code-"+getUniqueID();
+	html = this.highlight(html, language,codeID);
+	pre.innerHTML = '<div class="iceCode-title">Code ' + language + '<span class="iceCode-info">Line:' + html.line + '</span><span class="iceCode-copy" onclick="copyTextByGodking(&#39;'+codeID+'&#39;)">复制</span><span class="iceCode-arrow"></span></div>' + html.html
+	//光庆改end
 	pre.className 	  = 'iceCode';
 	pre.style.width   = width;
 	pre.style.display = 'block';
@@ -414,12 +475,12 @@ ice.code.prototype.text2html = function (str) {
 	return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return {'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'}[t];});
 };
 //代码高亮
-ice.code.prototype.highlight = function(data, language) {
+ice.code.prototype.highlight = function(data, language,codeID) {
 	language = language.toLowerCase() || 'common';
 	var that = this;	
 	data = data.trim();
+	var olddata = that.html2text(data);
 	//根据内置编程语言格式化
-	
 	data = that.toLanguage(data,language);
 	//转义
 	data = that.html2text(data);	
@@ -429,7 +490,6 @@ ice.code.prototype.highlight = function(data, language) {
 	//删除最后一行的空行
 	if(!html[html.length-1].trim()) html.pop();
 	//格式化html
-	
 	var li = '';
 	for (var i = 0; i < html.length; i++){
 		li += '<li>'+(i+1)+'.</li>';
@@ -437,7 +497,9 @@ ice.code.prototype.highlight = function(data, language) {
 	}
 	return {
 		line: html.length,
-		html: '<div class="iceCode-main" style="max-height:'+this.height+';"><div class="iceCode-line">'+li+'</div><ul class="iceCode-content iceCode-default iceCode-'+language+'">'+code+'</ul></div>'
+		//光庆改start，添加代码唯一ID，隐藏文本
+		html: '<div class="iceCode-main" style="max-height:'+this.height+';">	<div class="iceCode-line">'+li+'</div><ul class="iceCode-content iceCode-default iceCode-'+language+'">'+code+'</ul></div><input type="hidden" id="'+codeID+'" value="'+olddata+'">'
+		//光庆改end
 	};
 };
 ice.code = new ice.code();
